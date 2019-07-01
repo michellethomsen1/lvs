@@ -1,0 +1,114 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.EventItemContainer>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+    Layout = "_Master.cshtml";
+    var currentYear = DateTime.Now.ToString("yyyy");
+    var Events = Model.Content.Children<SingleEvent>().OrderBy(x => x.Date);
+
+
+    var cultureinfo = new System.Globalization.CultureInfo("da-DA");
+
+}
+
+
+
+<section class="container module_hero_section text-center " style="background-image:url('@Model.Content.Picture.Url')">
+    <div class="row">
+        <div class="module_hero_card col-lg-7 rellax" data-rellax-speed="1.5">
+            <h1 class="underline">@Model.Content.Headline</h1>
+            <p class="text-left">
+                @Model.Content.BodyText
+            </p>
+
+        </div>
+    </div>
+</section>
+
+<section class="container module_calender">
+    <div class="row  d-flex align-items-center module_calener_heading justify-content-center">
+   
+        <h2 class="h1">@currentYear</h2>
+       
+    </div>
+    <div class="row  d-flex justify-content-center">
+        <div class="col-lg-10  ">
+            <div class="module_calender_controll  d-flex justify-content-between">
+                <div class="module_calender_filtering d-flex align-items-center">
+                    <div class="module_calender_search d-flex " id="module_search_toggle">
+                        <input type="text" placeholder="Søg..." name="" id="module_calender_search" style="background:url(/Assets/images/icons/search.svg) no-repeat 12px 12px;">
+
+                    </div>
+
+                   
+                </div>
+
+                <div class="module_calender_view d-flex">
+                    <div class="module_calender_box_view" id="module_calender_box_view">
+                        <i data-feather="grid"></i>
+                    </div>
+                    <div class="module_calender_list_view" id="module_calender_list_view">
+                        <i data-feather="list"></i>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row  d-flex justify-content-center" id="module_calender_row_list">
+
+    
+        @foreach (var Event in Events)
+    {
+        if (Event.Date.Year.ToString() == currentYear)
+        {
+
+            <div class="col-lg-10 module_calender_wrapper" style="visibility: visible; ">
+                <div style="width:100%;">
+                    <a href="@Event.Url">
+                        <div class="module_calender_card">
+
+                            <div class="module_calender_card_img_wrapper">
+                                <div class="module_calender_date ">
+                                    <p class="p_lead">@Event.Date.ToString("dd")</p>
+                                    <p class="p_lead">@Event.Date.ToString("MMM", cultureinfo)</p>
+                                </div>
+                                <div class="module_calender_img">
+                                    <img src="@Event.Picture.Url" alt="@Event.Picture.Name">
+                                </div>
+                            </div>
+                            <div class="module_calender_info">
+                                <div class="">
+                                    <div class="module_calender_event_heading">
+                                        <p class="category">@Event.Headline</p>
+                                    </div>
+                                    <div class="module_calender_date_time_wrapper">
+                                        <div class="module_calender_time">
+                                            <i data-feather="clock"></i>
+                                            <p>@Event.Date.ToString("HHHH:mmmm")</p>
+                                        </div>
+                                        <div class="module_calender_place">
+                                            <i data-feather="map-pin"></i>
+                                            <p>@Event.Place</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </a>
+                </div>
+                <div class="module_calender_social_media  ">
+                    <i class="fab fa-linkedin"></i>
+                    <i class="fab fa-facebook"></i>
+                    <i class="fab fa-twitter"></i>
+                </div>
+            </div>
+    }
+}
+    </div>
+
+</section>
+<script>
+
+
+</script>

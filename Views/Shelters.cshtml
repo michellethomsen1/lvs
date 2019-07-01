@@ -1,0 +1,166 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.SheltersPage>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+    Layout = "_Master.cshtml";
+}
+
+<section class="container module_hero_section text-center " style="background-image:url(@Model.Content.Picture.Url)">
+    <div class="row">
+        <div class="module_hero_card col-lg-7 rellax" data-rellax-speed="1.5">
+            <h1 class="underline">@Model.Content.Headline</h1>
+            @Model.Content.BodyText
+        </div>
+    </div>
+</section>
+
+<section class="findværested d-flex align-items-center" style="background-image: url(~/Assets/images/map.png)">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-8 offset-md-2">
+                <h1 class="underline text-uppercase">@Model.Content.SecondHeadline</h1>
+                <p>@Model.Content.Paragraph</p>
+            </div>
+            <div class="container-fluid search_box">
+                <div class="row">
+                    <div class="col-2 col-sm-1 search_icon"><i data-feather="search"></i></div><input type="text" class="col-9 offset-1 col-sm-10 offset-sm-1 h2" id="myInput" onkeyup="myFunction()" placeholder="Søg ..">
+                </div>
+            </div>
+        </div>
+
+        <div class="container shelters">
+            <ul class="row" id="myUL">
+                @foreach (var item in Model.Content.Shelters)
+                {
+                    SingleShelter items = (SingleShelter)item;
+
+                    <li class="col-6 col-md-4">
+                        <a href="#">
+                            <div class="row findværested_box">
+                                <div class="col-12 findværested_box_content">
+                                    <div class="row d-flex align-items-center">
+                                        <p class="col-12">@items.Nameoftheshelter</p>
+                                        <p class="col-12">@items.Address<br />@items.Zipcode @items.City</p>
+                                    </div>
+                                </div>
+                                <div class="col-12 contact_info_shelter">
+                                    <div class="row">
+                                        <button class="col-6 map_shelter" onclick="location.href='https://maps.google.com/?q=@items.Address,@items.City'" type="button">
+                                            <i data-feather="navigation"></i><span>Route</span>
+                                        </button>
+                                        <button class="col-6 vl" onclick="location.href='tel:+4563755680'" type="button">
+                                            <i data-feather="phone"></i><span>@items.PhoneNumber</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="blivfrivillig d-flex align-items-center" style="background-image: url(~/Assets/images/people.png)">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 offset-md-1 col-10 offset-1 d-flex align-items-center justify-content-center blivfrivillig_box">
+                <div class="blivfrivillig_box_content">
+                    <h1 class="underline">Bliv frivillig</h1>
+
+                    <p class="p_lead">Søg og bliv frivillig på en af vores mange væresteder</p>
+
+                    <button class="btn small_btn" onclick="toggle()">
+                        Bliv frivillig
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="overlay">
+    <section id="signup">
+        <form id="msform">
+            <section class="container">
+                <div class="row">
+                    <ul id="progressbar" class="col-12">
+                        <li class="active"><b>Postnummer</b></li>
+                        <li><b>Værested</b></li>
+                        <li><b>Oplysninger</b></li>
+                        <li><b>Interesser</b></li>
+                        <li></li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="container">
+                <div class="row">
+                    <fieldset class="col-12">
+                        <h2 class="fs-title">Opret dig som frivillig</h2>
+                        <input type="text" name="postnummer" placeholder="Indtast dit postnummer" />
+                        <button type="button" class="previous" disabled><i data-feather="arrow-left-circle"></i></button>
+                        <button type="button" class="next"><i data-feather="arrow-right-circle"></i></button>
+                    </fieldset>
+                    <fieldset class="col-12">
+                        <h2 class="fs-title">Vælg væresteder</h2>
+                        <input type="text" name="Dagvarmestuen" placeholder="Dagvarmestuen" />
+                        <input type="text" name="Paraplyen" placeholder="Paraplyen" />
+                        <input type="text" name="Reden" placeholder="Reden i Odense" />
+                        <button type="button" class="previous"><i data-feather="arrow-left-circle"></i></button>
+                        <button type="button" class="next"><i data-feather="arrow-right-circle"></i></button>
+                    </fieldset>
+                    <fieldset class="col-12">
+                        <h2 class="fs-title">Dine oplysninger</h2>
+                        <input type="text" name="name" placeholder="Dit navn" />
+                        <input type="text" name="address" placeholder="Din addresse" />
+                        <input type="text" name="email" placeholder="Din email" />
+                        <button type="button" class="previous"><i data-feather="arrow-left-circle"></i></button>
+                        <button type="button" class="next"><i data-feather="arrow-right-circle"></i></button>
+                    </fieldset>
+                    <fieldset class="col-12">
+                        <div class="row">
+                            <div class="col-4">
+                                <label class="d-flex justify-content-center align-items-center">
+                                    <figure>
+                                        <div><i class="far fa-calendar"></i></div>
+                                        <figcaption>Events</figcaption>
+                                    </figure>
+                                    <input type="checkbox" name="image" value="events" checked="checked" />
+                                </label>
+                            </div>
+                            <div class="col-4">
+                                <label class="d-flex justify-content-center align-items-center">
+                                    <figure>
+                                        <div><i class="far fa-calendar"></i></div>
+                                        <figcaption>Genbrugsbutiken</figcaption>
+                                    </figure>
+                                    <input type="checkbox" name="image" value="genbrugsbutiken" />
+                                </label>
+                            </div>
+                            <div class="col-4">
+                                <label class="d-flex justify-content-center align-items-center">
+                                    <figure>
+                                        <div><i class="fas fa-child"></i></div>
+                                        <figcaption>Sport</figcaption>
+                                    </figure>
+                                    <input type="checkbox" name="image" value="sport" />
+                                </label>
+                            </div>
+                        </div>
+                        <button type="button" class="previous"><i data-feather="arrow-left-circle"></i></button>
+                        <button type="button" class="next"><i data-feather="arrow-right-circle"></i></button>
+                    </fieldset>
+                    <fieldset class="col-12">
+                        <div id="successPopUp">
+                            <h1 class="fs-title-white">Tak for din hjælp</h1>
+                            <i data-feather="check-circle"></i>
+                        </div>
+                        <button type="button" class="previous"><i data-feather="arrow-left-circle"></i></button>
+                        <button type="button" class="submit" onclick="off()"><i data-feather="x"></i></button>
+                    </fieldset>
+                </div>
+            </section>
+        </form>
+    </section>
+</div>

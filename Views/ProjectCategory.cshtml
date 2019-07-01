@@ -1,0 +1,72 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.ProjectCategory>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+    Layout = "_Master.cshtml";
+    var typedMultiNodeTreePicker = Model.Content.GetPropertyValue<IEnumerable<IPublishedContent>>("itemPicker");
+}
+
+
+<section class="container module_news_card_overview  module_calender ">
+    <div class="row">
+        <div class="module_calender_controll  d-flex justify-content-between">
+            <div class="module_calender_filtering d-flex align-items-center">
+                <div class="module_calender_search d-flex " id="module_search_toggle">
+                    <input type="text" placeholder="Søg..." name="" id="module_calender_search" style="background:url(/Assets/images/icons/search.svg) no-repeat 12px 12px;">
+
+                </div>
+
+
+            </div>
+
+       
+        </div>
+
+    </div>
+    <div class="row">
+        <h2 class="underline h1">Kategori: @Model.Content.Name</h2>
+    </div>
+    <div class="row">
+
+        @foreach (var item in typedMultiNodeTreePicker)
+    {
+        <div class="col-lg-4  module_news_card_wrapper" style="visibility: visible; ">
+            <div class="module_news_card">
+                <div class="thumbnail">
+                    <img src="@Umbraco.Media(Model.Content.GetPropertyValue("Picture").ToString()).Url" alt="">
+                </div>
+                <div class="news_card_text">
+                    <div class="d-flex align-items-center news_card_date">
+                        <i data-feather="clock"></i>
+                        <p>
+                          
+
+                            @item.CreateDate.ToString("dd-MM-yyyy")
+                        </p>
+                    </div>
+                    <div class="item-search">
+                        <p class="news_heading">@item.Name</p>
+                    </div>
+                </div>
+                <div class="news_card_cta d-flex align-items-center  justify-content-between">
+                    <div class="news_likes d-flex">
+                        <i data-feather="heart"></i>
+                        <p>56</p>
+                    </div>
+                    <div class="line">
+                    </div>
+                    <div class="cta">
+                        <a href="@item.Url">Læs hele nyheden </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+}
+
+
+
+
+
+
+
+    </div>
+</section>

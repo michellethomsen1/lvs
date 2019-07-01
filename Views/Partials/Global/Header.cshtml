@@ -1,0 +1,74 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+
+    // getting pages under home
+    var home = Model.Content.Site();
+    var pages = Model.Content.Site().Children();
+    var selection = Model.Content.Site().FirstChild("newsItemContainer").Children("singleNewsItem").Take(2);
+
+ }
+
+    <header>
+        <div class="container">
+            <nav class="navbar navbar-expand-md navbar-light">
+                <a class="navbar-brand" href="/"><img src="~/Assets/images/logo.png" alt=""></a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto"></ul>
+                    <ul class="navbar-nav">
+
+                        @foreach (var item in home.GetPropertyValue<IEnumerable<IPublishedContent>>("mainNavigation"))
+                        {
+                    <li class="nav-item"><a class="nav-link" href="@item.Url">@item.Name</a></li>
+
+}
+
+
+
+   
+                        <li class="nav-item dropdown">
+ <li class="nav-item dropdown">
+                            <a class="nav-link " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i data-feather="bell"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-styles" aria-labelledby="navbarDropdown">
+                                <ul class="col-10 offset-1">
+                                    <li><strong>Nyheder</strong></li>
+                                </ul>
+                                <br>
+
+                                @foreach (var item in selection)
+                                    {
+                                        var newsImg = item.GetPropertyValue<IPublishedContent>("picture");
+
+                                <div class="col-10 offset-1" style="background-image:url('@newsImg.Url');">
+                                    
+                                    <span class="clockdate"><i data-feather="clock"></i> <span>@item.CreateDate.ToString("dd-MM-yyyy")</span></span>
+                                    <span>@item.GetPropertyValue("headline")</span>
+                                    <span><a href="@item.Url">Læs hele nyheden</a></span>
+                                </div>
+                            <br>
+                                        
+                                    }
+
+                       
+                                
+                               
+                             
+                 
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    
+    
+    
+
+

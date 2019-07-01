@@ -1,0 +1,107 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.About>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+    Layout = "_Master.cshtml";
+}
+
+
+<section class="container module_hero_section text-center " style="background-image:url(@Model.Content.Picture.Url)">
+    <div class="row">
+        <div class="module_hero_card col-lg-7 rellax" data-rellax-speed="1.5">
+            <h1 class="underline">@Model.Content.Headline</h1>
+            @Model.Content.BodyText
+        </div>
+    </div>
+</section>
+
+<section class="about_mission_vision">
+    <div class="container mission_vision_h1">
+        <h1 class="underline">@Model.Content.Mvheadline</h1>
+    </div>
+
+    <div class="mv_background" style="background-image: url(@Model.Content.Mvimage.Url)">
+        <div class="container">
+            <div class="mission_vision_txt">
+                <div class="row">
+                    <div class="col-lg-6 mv_border_r">
+                        @Model.Content.Mission
+                    </div>
+
+                    <div class="col-lg-6">
+                        @Model.Content.Vision
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="about_facts_section">
+    <div class="container">
+        <div class="facts_h1">
+            <h1 class="underline">@Model.Content.Fheadline</h1>
+        </div>
+
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <div class="row">
+                    <div class="col-12 about_facts">
+                        <div class="row">
+                            <div class="col-md-4 margin-25-bottom">
+                                <i data-feather="home"></i>
+                                <p>100 VÆRESTEDER</p>
+                            </div>
+
+                            <div class="col-md-4 margin-25-bottom">
+                                <i data-feather="calendar"></i>
+                                <p>50 EVENTS</p>
+                            </div>
+
+                            <div class="col-md-4">
+                                <i data-feather="heart"></i>
+                                <p>2300 FRIVILLIGE</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        @Model.Content.Facts
+                    </div>
+
+                    <div class="col-lg-6 about_facts_img">
+                        <img src="@Model.Content.Fimage.Url" alt="hand">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="employee_section">
+    <div class="container">
+        <div class="employee_h1">
+            <h1 class="underline">@Model.Content.Eheadline</h1>
+        </div>
+       
+        <div class="row">
+            @foreach (var item in Model.Content.Employees)
+            {
+                SingleEmployeeItem items = (SingleEmployeeItem)item;
+
+                <div class="col-lg-4 col-md-6">
+                    <img src="@items.EmployeeImage.Url" alt="">
+
+                    <div class="overlay">
+                        <div class="text">
+                            @items.NameOfTheEmployee
+                            <br />@items.Position
+                            <br />
+                            <br />@items.ContactMail
+                            <br />@items.Phonenumber
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

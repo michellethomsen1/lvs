@@ -1,0 +1,45 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.PublicationCategoryContainer>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+    Layout = "_Master.cshtml";
+
+    var categories = Model.Content.Children<PublicationCategory>();
+}
+
+<section class="container module_hero_section text-center " style="background-image:url(@Model.Content.Picture.Url)">
+    <div class="row">
+        <div class="module_hero_card col-lg-7 rellax" data-rellax-speed="1.5">
+            <h1 class="underline">@Model.Content.Headline</h1>
+            <p class="text-left">
+                @Model.Content.BodyText
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="container module_nav_overview position-relative ">
+    <div class="row">
+        <h2 class="h1 underline">PUBLIKATION OVERSIGT</h2>
+        <div class="module_nav_card d-flex flex-wrap justify-content-center  col-lg-12">
+            @foreach (var category in categories)
+            {
+                <div class="col-lg-5 module_nav_hover ">
+                    <a href="@category.Url">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="wrapper">
+                                <div class="d-flex align-items-baseline">
+                                    <i data-feather="award"></i>
+                                    <h4>@category.Headline</h4>
+                                </div>
+                                <p>@category.BodyText </p>
+                            </div>
+                            <i data-feather="chevron-right"></i>
+                        </div>
+                        <hr>
+                    </a>
+                </div>
+            }
+
+        </div>
+    </div>
+</section>

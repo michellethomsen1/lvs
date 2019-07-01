@@ -1,0 +1,388 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.Home>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+    Layout = "_Master.cshtml";
+}
+
+<section class="d-flex align-items-center frontpage_hero" style="background-image: url(@Model.Content.Heroimage.Url)">
+    <div class="container">
+        <div class="frontpage_hero_txt">
+            <h1 class="font_size_mega text-uppercase">@Model.Content.Headline</h1>
+            <p class="p_lead">"@Model.Content.Subline"</p>
+        </div>
+        <div class="row">
+            <div class="col-sm-10 offset-sm-1 frontpage_hero_facts">
+                <div class="row">
+                    <div class="col-md-4 margin-25-bottom">
+                        <i data-feather="home"></i>
+                        <p>100 VÆRESTEDER</p>
+                    </div>
+                    <div class="col-md-4 margin-25-bottom">
+                        <i data-feather="calendar"></i>
+                        <p>50 EVENTS</p>
+                    </div>
+                    <div class="col-md-4">
+                        <i data-feather="heart"></i>
+                        <p>2300 FRIVILLIGE</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container module_hero_section text-center rellax " data-rellax-speed="1.5" style="background-image:url(@Model.Content.Picture.Url)">
+    <div class="row">
+        <div class="module_hero_card col-lg-8 rellax" data-rellax-speed="1.5">
+            <h1 class="underline text-uppercase">@Model.Content.Headline</h1>
+            @Model.Content.BodyText
+        </div>
+    </div>
+</section>
+
+@foreach (var item in Model.Content.PickEvent)
+{
+    SingleEvent singleEvents = (SingleEvent)item;
+
+
+
+
+    <section class="container module_countdown d-flex align-items-center" style="background-image: url(@singleEvents.Picture.Url)">
+        <div class="container">
+            <div class="row">
+                <div id="myModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/@Model.Content.YoutubeVideoID" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-1 offset-lg-2 d-flex align-items-center">
+                    <button id="moduel_countdown_btn" class="btn_play">
+                        <img src="~/Assets/images/icons/play_icon.svg" alt="">
+                    </button>
+                </div>
+                <div class="col-lg-5 offset-lg-3">
+                    <div class="module_countdown_card  d-flex flex-column align-items-center">
+                        <h2 class="h1 underline text-uppercase">
+                            IDVI EVENTS
+                        </h2>
+                        <div class="module_countdown_coundowntimer">
+                            <div class="d-flex module_countdown_timer_text">
+                                <p>Dage</p>
+                                <p>Timer</p>
+                                <p>Minutter</p>
+                                <p>Sekunder</p>
+                            </div>
+                            <div id="countdown" class="d-flex justify-content-center"></div>
+                        </div>
+                        <div class="module_countdown_eventinfo d-flex">
+                            <div class="module_countdown_date">
+                                <p>@singleEvents.Date.Day</p>
+                                <p>
+                                    @{var monthName = "";
+
+                                        switch (@singleEvents.Date.Month)
+                                        {
+                                            case 1:
+                                                monthName = "Januar";
+                                                break;
+                                            case 2:
+                                                monthName = "Februar";
+                                                break;
+                                            case 3:
+                                                monthName = "Marts";
+                                                break;
+                                            case 4:
+                                                monthName = "April";
+                                                break;
+                                            case 5:
+                                                monthName = "Maj";
+                                                break;
+                                            case 6:
+                                                monthName = "Juni";
+                                                break;
+                                            case 7:
+                                                monthName = "Juli";
+                                                break;
+                                            case 8:
+                                                monthName = "August";
+                                                break;
+                                            case 9:
+                                                monthName = "September";
+                                                break;
+                                            case 10:
+                                                monthName = "Oktober";
+                                                break;
+                                            case 11:
+                                                monthName = "November";
+                                                break;
+                                            case 12:
+                                                monthName = "December";
+                                                break;
+                                        }
+
+                                        @monthName
+                                    }
+                                </p>
+                            </div>
+                            <div class="module_countdown_eventtitle">
+                                <p>  @singleEvents.Headline</p>
+                                <div class="d-flex">
+                                    <div class="d-flex module_countdown_time">
+                                        <i data-feather="clock"></i>
+                                        <p>@singleEvents.Date.Hour:@singleEvents.Date.Minute</p>
+                                    </div>
+                                    <div class="d-flex module_countdown_place">
+                                        <i data-feather="map-pin"></i>
+                                        <p>@singleEvents.Place</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="location.href='@singleEvents.Url'" class="btn btn_fullwidth">
+                            Læs mere
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+    // Set the date we're counting down to
+        var countDownDate = new Date("@singleEvents.Date.ToString("MMMM dd, yyyy hh:mm:ss")").getTime();
+
+    </script>
+}
+
+    <div id="overlay">
+        <section id="signup">
+            <form id="msform">
+                <section class="container">
+                    <div class="row">
+                        <ul id="progressbar" class="col-12">
+                            <li class="active"><b>Postnummer</b></li>
+                            <li><b>Værested</b></li>
+                            <li><b>Oplysninger</b></li>
+                            <li><b>Interesser</b></li>
+                            <li></li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="container">
+                    <div class="row">
+                        <div id="closeBtn" onClick="off();toggle();"><i data-feather="x"></i></div>
+                        <fieldset class="col-12">
+                            <h2 class="fs-title">Opret dig som frivillig</h2>
+                            <input type="text" name="postnummer" placeholder="Indtast dit postnummer" />
+                            <button type="button" class="previous" disabled><i data-feather="arrow-left-circle"></i></button>
+                            <button type="button" class="next"><i data-feather="arrow-right-circle"></i></button>
+                        </fieldset>
+                        <fieldset class="col-12">
+                            <h2 class="fs-title">Vælg væresteder</h2>
+                            <input type="text" name="Dagvarmestuen" placeholder="Dagvarmestuen" />
+                            <input type="text" name="Paraplyen" placeholder="Paraplyen" />
+                            <input type="text" name="Reden" placeholder="Reden i Odense" />
+                            <button type="button" class="previous"><i data-feather="arrow-left-circle"></i></button>
+                            <button type="button" class="next"><i data-feather="arrow-right-circle"></i></button>
+                        </fieldset>
+                        <fieldset class="col-12">
+                            <h2 class="fs-title">Dine oplysninger</h2>
+                            <input type="text" name="name" placeholder="Dit navn" />
+                            <input type="text" name="address" placeholder="Din addresse" />
+                            <input type="text" name="email" placeholder="Din email" />
+                            <button type="button" class="previous"><i data-feather="arrow-left-circle"></i></button>
+                            <button type="button" class="next"><i data-feather="arrow-right-circle"></i></button>
+                        </fieldset>
+                        <fieldset class="col-12">
+                            <div class="row">
+                                <div class="col-4">
+                                    <label id="option-one" class="d-flex justify-content-center align-items-center">
+                                        <figure>
+                                            <div><i class="far fa-calendar"></i></div>
+                                            <figcaption>Events</figcaption>
+                                        </figure>
+                                        <input type="checkbox" id="eventscheck" name="image" value="events" checked='checked' />
+                                    </label>
+                                </div>
+                                <div class="col-4">
+                                    <label id="option-two" class="d-flex justify-content-center align-items-center">
+                                        <figure>
+                                            <div><i class="far fa-calendar"></i></div>
+                                            <figcaption>Genbrugsbutiken</figcaption>
+                                        </figure>
+                                        <input type="checkbox" id="genbrugscheck" name="image" value="genbrugsbutiken" />
+                                    </label>
+                                </div>
+                                <div class="col-4">
+                                    <label id="option-three" class="d-flex justify-content-center align-items-center">
+                                        <figure>
+                                            <div><i class="fas fa-child"></i></div>
+                                            <figcaption>Sport</figcaption>
+                                        </figure>
+                                        <input type="checkbox" id="sportscheck" name="image" value="sport" />
+                                    </label>
+                                </div>
+                            </div>
+                            <button type="button" class="previous"><i data-feather="arrow-left-circle"></i></button>
+                            <button type="button" class="next"><i data-feather="arrow-right-circle"></i></button>
+                        </fieldset>
+                        <fieldset class="col-12">
+                            <div id="successPopUp">
+                                <h1 class="fs-title-white">Tak for din hjælp</h1>
+                                <i data-feather="check-circle"></i>
+                            </div>
+                            <button type="button" class="previous"><i data-feather="arrow-left-circle"></i></button>
+                            <button type="button" class="submit" onclick="off();toggle();"><i data-feather="x"></i></button>
+                        </fieldset>
+                    </div>
+                </section>
+            </form>
+        </section>
+    </div>
+<section class="blivfrivillig d-flex align-items-center" style=" margin: 250px 0px; background-image: url('/Assets/images/people.png')">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 offset-md-1 col-10 offset-1 d-flex align-items-center justify-content-center blivfrivillig_box">
+                <div class="blivfrivillig_box_content">
+                    <h1 class="underline">Bliv frivillig</h1>
+                    <p class="p_lead">Søg og bliv frivillig på en af vores mange væresteder</p>
+                    <button class="btn small_btn" onclick="toggle()">
+                        Bliv frivillig
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container module_news_card_overview">
+    <div class="row">
+        <h2 class="underline h1 text-uppercase">@Model.Content.Newsheadline</h2>
+    </div>
+    <div class="row">
+
+        @foreach (var item in Model.Content.NewsPicker)
+        {
+            SingleNewsItem singleNews = (SingleNewsItem)item;
+            <div class="col-lg-4">
+                <div class="module_news_card">
+                    <div class="thumbnail">
+                        <img src="@singleNews.Picture.Url" alt="">
+                    </div>
+                    <div class="news_card_text">
+                        <div class="d-flex align-items-center">
+                            <i data-feather="clock"></i>
+                            <p>
+                                @singleNews.Date.Day.
+                                @{var monthName = "";
+
+                                    switch (@singleNews.Date.Month)
+                                    {
+                                        case 1:
+                                            monthName = "Januar";
+                                            break;
+                                        case 2:
+                                            monthName = "Februar";
+                                            break;
+                                        case 3:
+                                            monthName = "Marts";
+                                            break;
+                                        case 4:
+                                            monthName = "April";
+                                            break;
+                                        case 5:
+                                            monthName = "Maj";
+                                            break;
+                                        case 6:
+                                            monthName = "Juni";
+                                            break;
+                                        case 7:
+                                            monthName = "Juli";
+                                            break;
+                                        case 8:
+                                            monthName = "August";
+                                            break;
+                                        case 9:
+                                            monthName = "September";
+                                            break;
+                                        case 10:
+                                            monthName = "Oktober";
+                                            break;
+                                        case 11:
+                                            monthName = "November";
+                                            break;
+                                        case 12:
+                                            monthName = "December";
+                                            break;
+                                    }
+
+                                    @(" " + monthName + " ")
+                                    @singleNews.Date.Year
+                                }
+                            </p>
+                        </div>
+                        <p class="news_heading">@singleNews.Headline</p>
+                    </div>
+                    <div class="news_card_cta d-flex align-items-center  justify-content-between">
+                        <div class="news_likes d-flex">
+                            <i data-feather="heart"></i>
+                            <p>56</p>
+                        </div>
+                        <div class="line">
+                        </div>
+                        <div class="cta">
+                            <a href="@singleNews.Url">Læs Artiklen </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+
+
+
+
+<script>
+
+
+    // Update the count down every 1 second
+    var x = setInterval(function () {
+
+        // Get todays date and time
+        var now = new Date().getTime();
+
+        // Find the distance between now an the count down date
+        var distance = countDownDate - now;
+
+
+
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        function makeMeTwoDigits(n) {
+            return (n < 10 ? "0" : "") + n;
+        }
+
+        // Output the result in an element with id="demo"
+        document.getElementById("countdown").innerHTML = "<p class='h1'>" + makeMeTwoDigits(days) + " </p> " + "<p class='h1'>" + makeMeTwoDigits(hours) + "</p>" + "<p class='h1'>" +
+            makeMeTwoDigits(minutes) + "</p>" + "<p class='h1'>" + makeMeTwoDigits(seconds) + "</p> ";
+
+        // If the count down is over, write some text
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("countdown").innerHTML = "EXPIRED";
+        }
+    }, 1000);
+</script>
+
+
+
+

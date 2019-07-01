@@ -1,0 +1,72 @@
+﻿
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+@{
+    var home = Model.Content.Site();
+
+}
+
+<footer>
+    <div class="container">
+        <section class="row">
+            <section class="col-12 col-md">
+                <h3 class="text-uppercase">lvs</h3>
+
+                @home.GetPropertyValue("footerText")
+
+            </section>
+            <section class="col-12 col-md footer-links">
+                <h3 class="text-uppercase">links</h3>
+                <ul class="text-uppercase">
+
+                    @{ }
+
+                    @foreach (var item in home.GetPropertyValue<IEnumerable<IPublishedContent>>("footerLinks"))
+                    {
+                        <li><a href="@item.Url">@item.Name</a></li>
+
+                    }
+
+
+
+                </ul>
+            </section>
+            <section class="col-12 col-md social-media">
+                <h3 class="text-uppercase">sociale medier</h3>
+                <ul>
+                    <li><a href="https://www.facebook.com/LandsforeningenAfVaeresteder" target="_blank"><i class="fab fa-facebook"></i>Facebook</a></li>
+                    <li><a href="#" target="_blank"><i class="fab fa-youtube"></i>Youtube</a></li>
+                    <li><a href="https://twitter.com/vaeresteder?lang=da" target="_blank"><i class="fab fa-twitter"></i>Twitter</a></li>
+                </ul>
+            </section>
+            <section class="col-12 col-md">
+                @home.GetPropertyValue("contactInfo")
+
+
+
+            </section>
+        </section>
+        <section class="row copy-line">
+            <section class="col">
+                <p>&copy; @DateTime.Now.Year Landsforeningen af VæreSteder</p>
+            </section>
+        </section>
+    </div>
+</footer>
+
+
+<script src="~/Assets/vendor/feather/feather.min.js"></script>
+<script>
+    feather.replace();
+</script>
+<script src="~/Assets/vendor/jquery/jquery-3.3.1.min.js"></script>
+
+<script src="~/Assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/Assets/vendor/rellax.min.js"></script>
+<script>
+    var rellax = new Rellax('.rellax', { center: true });
+</script>
+
+<script src="~/Assets/scripts/main.js"></script>
+
+
